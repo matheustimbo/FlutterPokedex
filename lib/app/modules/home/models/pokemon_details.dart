@@ -197,6 +197,9 @@ class PokemonDetails {
   Color get color => getColorByType(types.first.type);
 
   String get number => '#' + id.toString().padLeft(3, '0');
+
+  String get imageUrl =>
+      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id.toString().padLeft(3, '0')}.png';
 }
 
 Color getColorByType(TypeListItem typeListItem) {

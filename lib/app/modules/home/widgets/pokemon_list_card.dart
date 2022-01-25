@@ -30,17 +30,14 @@ class _PokemonListCardState
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       if (controller.loadingPokemonDetails) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Shimmer.fromColors(
-            child: Container(
-              width: double.infinity,
-              height: 120,
-              color: Colors.grey,
-            ),
-            baseColor: const Color(0xFFEDEDED),
-            highlightColor: const Color(0xFFF6F6F6),
+        return Shimmer.fromColors(
+          child: Container(
+            width: double.infinity,
+            height: 120,
+            color: Colors.grey,
           ),
+          baseColor: const Color(0xFFEDEDED),
+          highlightColor: const Color(0xFFF6F6F6),
         );
       }
       if (controller.pokemonDetails != null) {
@@ -74,10 +71,20 @@ class _PokemonListCardState
                       child: Hero(
                         tag: 'pokemon_sprite_frontdefault',
                         child: CachedNetworkImage(
-                          imageUrl: pokemon.sprites.frontDefault,
+                          imageUrl: pokemon.imageUrl,
                           placeholder: (context, url) => const SizedBox(),
                           errorWidget: (context, url, error) =>
                               const SizedBox(),
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 90,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
