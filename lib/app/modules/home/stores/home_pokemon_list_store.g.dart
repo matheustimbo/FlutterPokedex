@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_list_controller.dart';
+part of 'home_pokemon_list_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'home_list_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$HomeListController on _HomeListControllerBase, Store {
-  final _$pokemonListAtom = Atom(name: '_HomeListControllerBase.pokemonList');
+mixin _$HomePokemonListStore on _HomePokemonListStoreBase, Store {
+  final _$pokemonListAtom = Atom(name: '_HomePokemonListStoreBase.pokemonList');
 
   @override
   List<PokemonListResult>? get pokemonList {
@@ -25,7 +25,7 @@ mixin _$HomeListController on _HomeListControllerBase, Store {
   }
 
   final _$loadingInitialListAtom =
-      Atom(name: '_HomeListControllerBase.loadingInitialList');
+      Atom(name: '_HomePokemonListStoreBase.loadingInitialList');
 
   @override
   bool get loadingInitialList {
@@ -40,23 +40,8 @@ mixin _$HomeListController on _HomeListControllerBase, Store {
     });
   }
 
-  final _$offsetAtom = Atom(name: '_HomeListControllerBase.offset');
-
-  @override
-  int get offset {
-    _$offsetAtom.reportRead();
-    return super.offset;
-  }
-
-  @override
-  set offset(int value) {
-    _$offsetAtom.reportWrite(value, super.offset, () {
-      super.offset = value;
-    });
-  }
-
   final _$loadingMorePokemonsAtom =
-      Atom(name: '_HomeListControllerBase.loadingMorePokemons');
+      Atom(name: '_HomePokemonListStoreBase.loadingMorePokemons');
 
   @override
   bool get loadingMorePokemons {
@@ -71,28 +56,11 @@ mixin _$HomeListController on _HomeListControllerBase, Store {
     });
   }
 
-  final _$getInitialListAsyncAction =
-      AsyncAction('_HomeListControllerBase.getInitialList');
-
-  @override
-  Future<void> getInitialList() {
-    return _$getInitialListAsyncAction.run(() => super.getInitialList());
-  }
-
-  final _$loadMorePokemonsAsyncAction =
-      AsyncAction('_HomeListControllerBase.loadMorePokemons');
-
-  @override
-  Future<void> loadMorePokemons() {
-    return _$loadMorePokemonsAsyncAction.run(() => super.loadMorePokemons());
-  }
-
   @override
   String toString() {
     return '''
 pokemonList: ${pokemonList},
 loadingInitialList: ${loadingInitialList},
-offset: ${offset},
 loadingMorePokemons: ${loadingMorePokemons}
     ''';
   }

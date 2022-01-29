@@ -1,48 +1,34 @@
-import 'package:mobx/mobx.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_list_response.dart';
 import 'package:pokedex/app/modules/home/repositories/home_list_repository.dart';
+import 'package:pokedex/app/modules/home/stores/home_pokemon_list_store.dart';
 
-part 'home_list_controller.g.dart';
+class HomeListController {
+  final HomeListRepository repository;
+  final HomePokemonListStore store;
 
-class HomeListController = _HomeListControllerBase with _$HomeListController;
-
-abstract class _HomeListControllerBase with Store {
-  final HomeListRepository homeListRepository;
-
-  _HomeListControllerBase(this.homeListRepository);
-
-  @observable
-  List<PokemonListResult>? pokemonList;
-
-  @observable
-  bool loadingInitialList = false;
-
-  @observable
-  int offset = 0;
+  HomeListController(
+    this.repository,
+    this.store,
+  );
 
   final listRequestLimit = 20;
 
-  @observable
-  bool loadingMorePokemons = false;
+  int offset = 0;
 
-  @action
   Future<void> getInitialList() async {
-    loadingInitialList = true;
-    final response =
-        await homeListRepository.getPokemonList(listRequestLimit, offset);
-    pokemonList = response.results;
-    loadingInitialList = false;
+    store.loadingInitialList = true;
+    final response = await repository.getPokemonList(listRequestLimit, offset);
+    store.pokemonList = response.results;
+    store.loadingInitialList = false;
     offset += response.results.length;
   }
 
-  @action
   Future<void> loadMorePokemons() async {
-    if (!loadingMorePokemons && pokemonList != null) {
-      loadingMorePokemons = true;
+    if (!store.loadingMorePokemons && store.pokemonList != null) {
+      store.loadingMorePokemons = true;
       final response =
-          await homeListRepository.getPokemonList(listRequestLimit, offset);
-      pokemonList!.addAll(response.results);
-      loadingMorePokemons = false;
+          await repository.getPokemonList(listRequestLimit, offset);
+      store.pokemonList!.addAll(response.results);
+      store.loadingMorePokemons = false;
       offset += response.results.length;
     }
   }

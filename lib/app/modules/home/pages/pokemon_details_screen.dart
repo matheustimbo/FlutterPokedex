@@ -2,6 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex/app/modules/home/models/pokemon_details.dart';
+import 'package:pokedex/app/modules/home/widgets/pokemon_evolutions_tab.dart';
+import 'package:pokedex/app/modules/home/widgets/pokemon_moves_tab.dart';
+import 'package:pokedex/app/modules/home/widgets/pokemon_types_tab.dart';
+import 'package:pokedex/core/config/app_colors.dart';
 import 'package:pokedex/core/widgets/pokemon_type_tag.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -73,15 +77,16 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen>
             cardController: _cardController,
             infoPanelMinHeight: infoPanelMinHeight,
             infoPanelMaxHeight: infoPanelMaxHeight,
+            pokemon: widget.pokemon,
           ),
           PokemonImage(
-            widget: widget,
+            pokemon: widget.pokemon,
             cardController: _cardController,
             infoPanelMinHeight: infoPanelMinHeight,
             infoPanelMaxHeight: infoPanelMaxHeight,
           ),
           PokemonDetailsHeader(
-            widget: widget,
+            pokemon: widget.pokemon,
           ),
         ],
       ),
@@ -116,12 +121,14 @@ class PokemonInfoPanel extends StatelessWidget {
   final AnimationController cardController;
   final double infoPanelMinHeight;
   final double infoPanelMaxHeight;
+  final PokemonDetails pokemon;
 
   const PokemonInfoPanel({
     Key? key,
     required this.cardController,
     required this.infoPanelMinHeight,
     required this.infoPanelMaxHeight,
+    required this.pokemon,
   }) : super(key: key);
 
   @override
@@ -129,8 +136,68 @@ class PokemonInfoPanel extends StatelessWidget {
     return SlidingUpPanel(
       minHeight: infoPanelMinHeight,
       maxHeight: infoPanelMaxHeight,
-      panel: const Center(
-        child: Text("This is the sliding Widget"),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(
+          25,
+        ),
+        topRight: Radius.circular(
+          25,
+        ),
+      ),
+      panel: Padding(
+        padding: const EdgeInsets.only(
+          top: 32,
+        ),
+        child: DefaultTabController(
+          length: 3,
+          initialIndex: 0,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const TabBar(
+                  labelColor: AppColors.black,
+                  unselectedLabelColor: AppColors.grey,
+                  labelPadding: EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 16,
+                  ),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorWeight: 2,
+                  indicatorColor: AppColors.indigo,
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  tabs: [
+                    Tab(
+                      text: 'Types',
+                      height: 20,
+                    ),
+                    Tab(
+                      text: 'Evolutions',
+                      height: 20,
+                    ),
+                    Tab(
+                      text: 'Moves',
+                      height: 20,
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: TabBarView(children: [
+                    const PokemonTypesTab(),
+                    PokemonEvolutionsTab(
+                      pokemon: pokemon,
+                    ),
+                    const PokemonMovesTab(),
+                  ]),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
       onPanelSlide: (position) => cardController.value = position,
     );
@@ -140,10 +207,10 @@ class PokemonInfoPanel extends StatelessWidget {
 class PokemonDetailsHeader extends StatelessWidget {
   const PokemonDetailsHeader({
     Key? key,
-    required this.widget,
+    required this.pokemon,
   }) : super(key: key);
 
-  final PokemonDetailsScreen widget;
+  final PokemonDetails pokemon;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +255,7 @@ class PokemonDetailsHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.pokemon.capitalizedName,
+                    pokemon.capitalizedName,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
@@ -199,7 +266,7 @@ class PokemonDetailsHeader extends StatelessWidget {
                     height: 8,
                   ),
                   Wrap(
-                    children: widget.pokemon.types
+                    children: pokemon.types
                         .map((pokemonType) => Padding(
                               padding: const EdgeInsets.only(
                                 right: 8,
@@ -213,7 +280,7 @@ class PokemonDetailsHeader extends StatelessWidget {
                 ],
               ),
               Text(
-                widget.pokemon.number,
+                pokemon.number,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -232,14 +299,14 @@ class PokemonDetailsHeader extends StatelessWidget {
 }
 
 class PokemonImage extends StatelessWidget {
-  final PokemonDetailsScreen widget;
+  final PokemonDetails pokemon;
   final AnimationController cardController;
   final double infoPanelMinHeight;
   final double infoPanelMaxHeight;
 
   const PokemonImage({
     Key? key,
-    required this.widget,
+    required this.pokemon,
     required this.cardController,
     required this.infoPanelMinHeight,
     required this.infoPanelMaxHeight,
@@ -261,9 +328,9 @@ class PokemonImage extends StatelessWidget {
             child: Opacity(
               opacity: 1 - cardController.value,
               child: Hero(
-                tag: 'pokemon_sprite_frontdefault',
+                tag: 'pokemon_sprite_frontdefault_${pokemon.id}',
                 child: CachedNetworkImage(
-                  imageUrl: widget.pokemon.imageUrl,
+                  imageUrl: pokemon.imageUrl,
                   placeholder: (context, url) => const SizedBox(),
                   errorWidget: (context, url, error) => const SizedBox(),
                   imageBuilder: (context, imageProvider) => Container(

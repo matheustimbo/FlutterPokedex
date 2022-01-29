@@ -1,31 +1,25 @@
-import 'package:mobx/mobx.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_details.dart';
 import 'package:pokedex/app/modules/home/models/pokemon_list_response.dart';
 import 'package:pokedex/app/modules/home/repositories/home_pokemon_card_repository.dart';
+import 'package:pokedex/app/modules/home/stores/home_pokemon_card_store.dart';
 
-part 'home_pokemon_card_controller.g.dart';
-
-class HomePokemonCardController = _HomePokemonCardControllerBase
-    with _$HomePokemonCardController;
-
-abstract class _HomePokemonCardControllerBase with Store {
+class HomePokemonCardController {
+  final HomePokemonCardStore homePokemonCardStore;
   final HomePokemonCardRepository homePokemonCardRepository;
 
-  _HomePokemonCardControllerBase(this.homePokemonCardRepository);
-
-  @observable
-  bool loadingPokemonDetails = false;
-
-  @observable
-  PokemonDetails? pokemonDetails;
+  HomePokemonCardController(
+    this.homePokemonCardStore,
+    this.homePokemonCardRepository,
+  );
 
   Future<void> fetchPokemonDetails(PokemonListResult pokemonListResult) async {
-    loadingPokemonDetails = true;
+    homePokemonCardStore.loadingPokemonDetails = true;
     final pokemonId = pokemonListResult.url
         .split('/')[pokemonListResult.url.split('/').length - 2];
     final response =
         await homePokemonCardRepository.getPokemonDetails(pokemonId);
-    pokemonDetails = response;
-    loadingPokemonDetails = false;
+    homePokemonCardStore.pokemonDetails = response;
+    homePokemonCardStore.loadingPokemonDetails = false;
   }
+
+  HomePokemonCardStore get store => homePokemonCardStore;
 }

@@ -11,7 +11,7 @@ import 'package:shimmer/shimmer.dart';
 class PokemonListCard extends StatefulWidget {
   final PokemonListResult pokemonListResult;
 
-  PokemonListCard({Key? key, required this.pokemonListResult})
+  const PokemonListCard({Key? key, required this.pokemonListResult})
       : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class _PokemonListCardState
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      if (controller.loadingPokemonDetails) {
+      if (controller.store.loadingPokemonDetails) {
         return Shimmer.fromColors(
           child: Container(
             width: double.infinity,
@@ -40,8 +40,8 @@ class _PokemonListCardState
           highlightColor: const Color(0xFFF6F6F6),
         );
       }
-      if (controller.pokemonDetails != null) {
-        final pokemon = controller.pokemonDetails!;
+      if (controller.store.pokemonDetails != null) {
+        final pokemon = controller.store.pokemonDetails!;
         return InkWell(
           onTap: () => Modular.to.pushNamed(
             PokemonDetailsScreen.routeName,
@@ -69,7 +69,7 @@ class _PokemonListCardState
                       right: 0,
                       bottom: 0,
                       child: Hero(
-                        tag: 'pokemon_sprite_frontdefault',
+                        tag: 'pokemon_sprite_frontdefault_${pokemon.id}',
                         child: CachedNetworkImage(
                           imageUrl: pokemon.imageUrl,
                           placeholder: (context, url) => const SizedBox(),

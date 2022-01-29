@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex/app/modules/home/controllers/home_list_controller.dart';
+import 'package:pokedex/app/modules/home/stores/home_pokemon_list_store.dart';
 import 'package:pokedex/app/modules/home/widgets/pokemon_list_card.dart';
 
 class HomeListScreen extends StatefulWidget {
@@ -34,6 +35,8 @@ class _HomeListScreenState
   Widget build(BuildContext context) {
     const double itemHeight = 120;
     final double itemWidth = (MediaQuery.of(context).size.width - 48 - 16) / 2;
+
+    final store = Modular.get<HomePokemonListStore>();
     return Scaffold(
       body: Stack(
         children: [
@@ -84,23 +87,24 @@ class _HomeListScreenState
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
                             return PokemonListCard(
-                              pokemonListResult: controller.pokemonList![index],
+                              pokemonListResult: store.pokemonList![index],
                             );
                           },
-                          childCount: controller.pokemonList?.length ?? 0,
+                          childCount: store.pokemonList?.length ?? 0,
                         ),
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: controller.loadingMorePokemons
+                      child: store.loadingMorePokemons
                           ? Center(
                               child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 24,
-                                    bottom: 24 +
-                                        MediaQuery.of(context).padding.bottom,
-                                  ),
-                                  child: const CircularProgressIndicator()),
+                                padding: EdgeInsets.only(
+                                  top: 24,
+                                  bottom: 24 +
+                                      MediaQuery.of(context).padding.bottom,
+                                ),
+                                child: const CircularProgressIndicator(),
+                              ),
                             )
                           : const SizedBox(),
                     )
