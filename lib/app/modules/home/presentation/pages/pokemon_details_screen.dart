@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_details.dart';
-import 'package:pokedex/app/modules/home/widgets/pokemon_evolutions_tab.dart';
-import 'package:pokedex/app/modules/home/widgets/pokemon_moves_tab.dart';
-import 'package:pokedex/app/modules/home/widgets/pokemon_types_tab.dart';
+import 'package:pokedex/app/modules/home/domain/entities/pokemon_details.dart';
+import 'package:pokedex/app/modules/home/presentation/widgets/pokemon_evolutions_tab.dart';
+import 'package:pokedex/app/modules/home/presentation/widgets/pokemon_moves_tab.dart';
+import 'package:pokedex/app/modules/home/presentation/widgets/pokemon_types_tab.dart';
 import 'package:pokedex/core/config/app_colors.dart';
 import 'package:pokedex/core/widgets/pokemon_type_tag.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';

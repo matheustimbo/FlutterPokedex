@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_details.dart';
+import 'package:pokedex/app/modules/home/domain/entities/pokemon_details.dart';
 
 class PokemonEvolutionsTab extends StatefulWidget {
   final PokemonDetails pokemon;

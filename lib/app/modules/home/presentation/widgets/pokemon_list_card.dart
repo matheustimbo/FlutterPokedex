@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokedex/app/modules/home/controllers/home_pokemon_card_controller.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_list_response.dart';
-import 'package:pokedex/app/modules/home/pages/pokemon_details_screen.dart';
+import 'package:pokedex/app/modules/home/data/models/pokemon_list_response_model.dart';
+import 'package:pokedex/app/modules/home/presentation/controllers/home_pokemon_card_controller.dart';
+import 'package:pokedex/app/modules/home/presentation/pages/pokemon_details_screen.dart';
 import 'package:pokedex/core/widgets/pokemon_type_tag.dart';
 import 'package:shimmer/shimmer.dart';
 

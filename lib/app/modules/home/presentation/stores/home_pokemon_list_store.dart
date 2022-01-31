@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:pokedex/app/modules/home/models/pokemon_list_response.dart';
+import 'package:pokedex/app/modules/home/data/models/pokemon_list_response_model.dart';
 
 part 'home_pokemon_list_store.g.dart';
 

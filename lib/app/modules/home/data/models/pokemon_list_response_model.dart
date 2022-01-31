@@ -1,26 +1,28 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:pokedex/app/modules/home/domain/entities/pokemon_list_response.dart';
 
-class PokemonListResponse {
-  final int count;
-  final String next;
-  final String previous;
-  final List<PokemonListResult> results;
-  PokemonListResponse({
-    required this.count,
-    required this.next,
-    required this.previous,
-    required this.results,
-  });
+class PokemonListResponseModel extends PokemonListResponse {
+  const PokemonListResponseModel({
+    required count,
+    required next,
+    required previous,
+    required results,
+  }) : super(
+          count,
+          next,
+          previous,
+          results,
+        );
 
-  PokemonListResponse copyWith({
+  PokemonListResponseModel copyWith({
     int? count,
     String? next,
     String? previous,
     List<PokemonListResult>? results,
   }) {
-    return PokemonListResponse(
+    return PokemonListResponseModel(
       count: count ?? this.count,
       next: next ?? this.next,
       previous: previous ?? this.previous,
@@ -37,8 +39,8 @@ class PokemonListResponse {
     };
   }
 
-  factory PokemonListResponse.fromMap(Map<String, dynamic> map) {
-    return PokemonListResponse(
+  factory PokemonListResponseModel.fromMap(Map<String, dynamic> map) {
+    return PokemonListResponseModel(
       count: map['count']?.toInt() ?? 0,
       next: map['next'] ?? '',
       previous: map['previous'] ?? '',
@@ -49,8 +51,8 @@ class PokemonListResponse {
 
   String toJson() => json.encode(toMap());
 
-  factory PokemonListResponse.fromJson(String source) =>
-      PokemonListResponse.fromMap(json.decode(source));
+  factory PokemonListResponseModel.fromJson(String source) =>
+      PokemonListResponseModel.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -61,7 +63,7 @@ class PokemonListResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PokemonListResponse &&
+    return other is PokemonListResponseModel &&
         other.count == count &&
         other.next == next &&
         other.previous == previous &&
@@ -75,6 +77,9 @@ class PokemonListResponse {
         previous.hashCode ^
         results.hashCode;
   }
+
+  @override
+  List<Object?> get props => [count, next, previous, results];
 }
 
 class PokemonListResult {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:pokedex/app/modules/home/controllers/home_list_controller.dart';
-import 'package:pokedex/app/modules/home/stores/home_pokemon_list_store.dart';
-import 'package:pokedex/app/modules/home/widgets/pokemon_list_card.dart';
+import 'package:pokedex/app/modules/home/presentation/controllers/home_list_controller.dart';
+import 'package:pokedex/app/modules/home/presentation/stores/home_pokemon_list_store.dart';
+import 'package:pokedex/app/modules/home/presentation/widgets/pokemon_list_card.dart';
 
 class HomeListScreen extends StatefulWidget {
   HomeListScreen({Key? key}) : super(key: key);

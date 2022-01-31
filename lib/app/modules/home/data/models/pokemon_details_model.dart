@@ -2,49 +2,51 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+import 'package:pokedex/app/modules/home/domain/entities/pokemon_details.dart';
 import 'package:pokedex/core/config/app_colors.dart';
 
-class PokemonDetails {
-  final List<Abilitie> abilities;
-  final int baseExperience;
-  final List<Form> forms;
-  final List<GameIndice> gameIndices;
-  final int height;
-  final List<dynamic> heldItems;
-  final int id;
-  final bool isDefault;
-  final String locationAreaEncounters;
-  final List<Move> moves;
-  final String name;
-  final int order;
-  final List<dynamic> pastTypes;
-  final Species species;
-  final Sprites sprites;
-  final List<Stat> stats;
-  final List<Type> types;
-  final int weight;
-  PokemonDetails({
-    required this.abilities,
-    required this.baseExperience,
-    required this.forms,
-    required this.gameIndices,
-    required this.height,
-    required this.heldItems,
-    required this.id,
-    required this.isDefault,
-    required this.locationAreaEncounters,
-    required this.moves,
-    required this.name,
-    required this.order,
-    required this.pastTypes,
-    required this.species,
-    required this.sprites,
-    required this.stats,
-    required this.types,
-    required this.weight,
-  });
+class PokemonDetailsModel extends PokemonDetails {
+  const PokemonDetailsModel({
+    required abilities,
+    required baseExperience,
+    required forms,
+    required gameIndices,
+    required height,
+    required heldItems,
+    required id,
+    required isDefault,
+    required locationAreaEncounters,
+    required moves,
+    required name,
+    required order,
+    required pastTypes,
+    required species,
+    required sprites,
+    required stats,
+    required types,
+    required weight,
+  }) : super(
+          abilities,
+          baseExperience,
+          forms,
+          gameIndices,
+          height,
+          heldItems,
+          id,
+          isDefault,
+          locationAreaEncounters,
+          moves,
+          name,
+          order,
+          pastTypes,
+          species,
+          sprites,
+          stats,
+          types,
+          weight,
+        );
 
-  PokemonDetails copyWith({
+  PokemonDetailsModel copyWith({
     List<Abilitie>? abilities,
     int? baseExperience,
     List<Form>? forms,
@@ -64,7 +66,7 @@ class PokemonDetails {
     List<Type>? types,
     int? weight,
   }) {
-    return PokemonDetails(
+    return PokemonDetailsModel(
       abilities: abilities ?? this.abilities,
       baseExperience: baseExperience ?? this.baseExperience,
       forms: forms ?? this.forms,
@@ -110,8 +112,8 @@ class PokemonDetails {
     };
   }
 
-  factory PokemonDetails.fromMap(Map<String, dynamic> map) {
-    return PokemonDetails(
+  factory PokemonDetailsModel.fromMap(Map<String, dynamic> map) {
+    return PokemonDetailsModel(
       abilities: List<Abilitie>.from(
           map['abilities']?.map((x) => Abilitie.fromMap(x))),
       baseExperience: map['base_experience']?.toInt() ?? 0,
@@ -137,8 +139,8 @@ class PokemonDetails {
 
   String toJson() => json.encode(toMap());
 
-  factory PokemonDetails.fromJson(String source) =>
-      PokemonDetails.fromMap(json.decode(source));
+  factory PokemonDetailsModel.fromJson(String source) =>
+      PokemonDetailsModel.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -149,7 +151,7 @@ class PokemonDetails {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PokemonDetails &&
+    return other is PokemonDetailsModel &&
         listEquals(other.abilities, abilities) &&
         other.baseExperience == baseExperience &&
         listEquals(other.forms, forms) &&
@@ -191,15 +193,6 @@ class PokemonDetails {
         types.hashCode ^
         weight.hashCode;
   }
-
-  String get capitalizedName => name[0].toUpperCase() + name.substring(1);
-
-  Color get color => getColorByType(types.first.type);
-
-  String get number => '#' + id.toString().padLeft(3, '0');
-
-  String get imageUrl =>
-      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id.toString().padLeft(3, '0')}.png';
 }
 
 Color getColorByType(TypeListItem typeListItem) {
